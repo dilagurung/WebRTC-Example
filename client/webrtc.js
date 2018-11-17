@@ -7,7 +7,7 @@ var serverConnection;
 
 var peerConnectionConfig = {
   'iceServers': [
-    {'urls': 'stun:stun.l.google.com:3478'},
+    {'urls': 'stun:23.21.150.121'},
     {'urls': 'stun:stun.l.google.com:19302'},
   ]
 };
