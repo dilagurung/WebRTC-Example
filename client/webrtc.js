@@ -87,8 +87,8 @@ function createdDescription(description) {
 }
 
 function gotRemoteStream(event) {
-  console.log('got remote stream ',event.streams[0]);
-  remoteVideo.srcObject = event.streams[0];
+  console.log('got remote stream ',event.streams);
+  remoteVideo.srcObject = event.streams[1];
 }
 
 function errorHandler(error) {
