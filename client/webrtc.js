@@ -7,7 +7,7 @@ var serverConnection;
 
 var peerConnectionConfig = {
   'iceServers': [
-    {'urls': 'stun:stun.stunprotocol.org:3478'},
+    //{'urls': 'stun:stun.stunprotocol.org:3478'},
     {'urls': 'stun:stun.l.google.com:19302'},
   ]
 };
@@ -55,7 +55,9 @@ function gotMessageFromServer(message) {
   var signal = JSON.parse(message.data);
 
   // Ignore messages from ourself
+  console.log(message, ' ',signal.uuid);
   if(signal.uuid == uuid) return;
+
 
   if(signal.sdp) {
     peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp)).then(function() {
@@ -70,13 +72,14 @@ function gotMessageFromServer(message) {
 }
 
 function gotIceCandidate(event) {
-  if(event.candidate != null) {
+  if(event.candidate != null)
+  {
     serverConnection.send(JSON.stringify({'ice': event.candidate, 'uuid': uuid}));
   }
 }
 
 function createdDescription(description) {
-  console.log('got description');
+  console.log('got description ',description);
 
   peerConnection.setLocalDescription(description).then(function() {
     serverConnection.send(JSON.stringify({'sdp': peerConnection.localDescription, 'uuid': uuid}));
@@ -84,7 +87,7 @@ function createdDescription(description) {
 }
 
 function gotRemoteStream(event) {
-  console.log('got remote stream');
+  console.log('got remote stream ',event.streams[0]);
   remoteVideo.srcObject = event.streams[0];
 }
 
