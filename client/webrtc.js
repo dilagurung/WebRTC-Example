@@ -6,9 +6,20 @@ var uuid;
 var serverConnection;
 
 var peerConnectionConfig = {
-  'iceServers': [
-    {'urls': 'stun:23.21.150.121'},
-    {'urls': 'stun:stun.l.google.com:19302'},
+  iceServers: [     // Information about ICE servers - Use your own!
+    /*{
+     urls: "turn:" + myHostname,  // A TURN server
+     username: "webrtc",
+     credential: "turnserver"
+
+
+     }*/
+    {
+      url: 'turn:numb.viagenie.ca',
+      credential: 'muazkh',
+      username: 'webrtc@live.com'
+
+    }
   ]
 };
 
@@ -72,14 +83,13 @@ function gotMessageFromServer(message) {
 }
 
 function gotIceCandidate(event) {
-  if(event.candidate != null)
-  {
+  if(event.candidate != null) {
     serverConnection.send(JSON.stringify({'ice': event.candidate, 'uuid': uuid}));
   }
 }
 
 function createdDescription(description) {
-  console.log('got description ',description);
+  console.log('got description');
 
   peerConnection.setLocalDescription(description).then(function() {
     serverConnection.send(JSON.stringify({'sdp': peerConnection.localDescription, 'uuid': uuid}));
@@ -87,8 +97,8 @@ function createdDescription(description) {
 }
 
 function gotRemoteStream(event) {
-  console.log('got remote stream ',event.streams);
-  remoteVideo.srcObject = event.streams[1];
+  console.log('got remote stream');
+  remoteVideo.srcObject = event.streams[0];
 }
 
 function errorHandler(error) {
