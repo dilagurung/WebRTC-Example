@@ -6,26 +6,42 @@ var uuid;
 var serverConnection;
 
 var peerConnectionConfig = {
-  iceServers: [     // Information about ICE servers - Use your own!
-    /*{
-     urls: "turn:" + myHostname,  // A TURN server
-     username: "webrtc",
-     credential: "turnserver"
+  'iceServers': [
 
-
-     }*/
-
+    {"url":"stun:ss-turn1.xirsys.com"},
+    {"username":"7cef6120-ee1b-11e8-871a-509c8360beb6",
+      "url":"turn:ss-turn1.xirsys.com:80?transport=udp",
+      "credential":"7cef61ca-ee1b-11e8-ab91-c997a309a135"},
+    {"username":"7cef6120-ee1b-11e8-871a-509c8360beb6",
+      "url":"turn:ss-turn1.xirsys.com:3478?transport=udp",
+      "credential":"7cef61ca-ee1b-11e8-ab91-c997a309a135"},
+    {"username":"7cef6120-ee1b-11e8-871a-509c8360beb6",
+      "url":"turn:ss-turn1.xirsys.com:80?transport=tcp",
+      "credential":"7cef61ca-ee1b-11e8-ab91-c997a309a135"},
+    {"username":"7cef6120-ee1b-11e8-871a-509c8360beb6",
+      "url":"turn:ss-turn1.xirsys.com:3478?transport=tcp",
+      "credential":"7cef61ca-ee1b-11e8-ab91-c997a309a135"},
+    {"username":"7cef6120-ee1b-11e8-871a-509c8360beb6",
+      "url":"turns:ss-turn1.xirsys.com:443?transport=tcp",
+      "credential":"7cef61ca-ee1b-11e8-ab91-c997a309a135"},
+    {"username":"7cef6120-ee1b-11e8-871a-509c8360beb6",
+      "url":"turns:ss-turn1.xirsys.com:5349?transport=tcp",
+      "credential":"7cef61ca-ee1b-11e8-ab91-c997a309a135"},
     {
-      "urls":
-        "turn:13.250.13.83:3478?transport=udp"
-      ,
-      "username": "YzYNCouZM1mhqhmseWk6",
-      "credential": "YzYNCouZM1mhqhmseWk6"
+      'urls': [
+        'stun:stun.l.google.com:19302',
+        'stun:stun.l.google.com:19302?transport=udp',
+      ]
     }
+
+
   ]
+
 };
 
-function pageReady() {
+function pageReady()
+{
+
   uuid = createUUID();
 
   localVideo = document.getElementById('localVideo');
