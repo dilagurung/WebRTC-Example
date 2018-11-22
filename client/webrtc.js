@@ -10,11 +10,24 @@ var peerConnectionConfig = {
 
 
     {
-      "urls": "turn:178.128.153.156:3478",
-    "username": "test",
-    "credential": "test"
-}
-    ,
+      'urls': [
+        'stun:webrtcweb.com:7788', // coTURN
+        'stun:webrtcweb.com:7788?transport=udp', // coTURN
+      ],
+      'username': 'muazkh',
+      'credential': 'muazkh'
+    },
+    {
+      'urls': [
+        'turn:webrtcweb.com:7788', // coTURN 7788+8877
+        'turn:webrtcweb.com:4455?transport=udp', // restund udp
+
+        'turn:webrtcweb.com:8877?transport=udp', // coTURN udp
+        'turn:webrtcweb.com:8877?transport=tcp', // coTURN tcp
+      ],
+      'username': 'muazkh',
+      'credential': 'muazkh'
+    },
     {
       'urls': [
         'stun:stun.l.google.com:19302',
