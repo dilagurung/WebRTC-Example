@@ -5,15 +5,23 @@ var peerConnection;
 var uuid;
 var serverConnection;
 
+// the ice server given on this link works https://webrtcexperiment-webrtc.netdna-ssl.com/IceServersHandler.js
 var peerConnectionConfig = {
   'iceServers': [
-
-
     {
-      "urls": "turn:178.128.153.156:3478",
-    "username": "stest",
-    "credential": "stest"
-}
+      "url": "stun:159.65.93.198:3478"
+    },
+    {
+      "url": "turn:159.65.93.198:3478?transport=tcp",
+      "credential": 'test',
+      "username": 'test'
+    },
+    {
+      "url": "turn:159.65.93.198:3478?transport=udp",
+      "credential": 'test',
+      "username": 'test'
+    }
+
   ]
 
 };

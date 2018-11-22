@@ -1,3 +1,16 @@
+NOTES:
+
+** the ice server given on this link works https://webrtcexperiment-webrtc.netdna-ssl.com/IceServersHandler.js
+
+
+
+
+
+
+
+
+
+
 WebRTC Example
 ==============
 
