@@ -15,6 +15,73 @@
 
     <script type="text/javascript">
         pageReady();
+
+        function checkTURNServer(turnConfig, timeout)
+        {
+            console.log(turnConfig);
+          return new Promise(function(resolve, reject){
+
+            setTimeout(function(){
+              if(promiseResolved) return;
+              resolve(false);
+              promiseResolved = true;
+            }, timeout || 5000);
+
+            var promiseResolved = false
+                    , myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection   //compatibility for firefox and chrome
+                    , pc = new myPeerConnection({iceServers:[
+                {
+                    "url": "stun:159.65.93.198:3478"
+                },
+                {
+                    "url": "turn:159.65.93.198:3478?transport=tcp",
+                    "credential": 'test',
+                    "username": 'test'
+                },
+                {
+                    "url": "turn:159.65.93.198:3478?transport=udp",
+                    "credential": 'test',
+                    "username": 'test'
+                }
+            ]})
+                    , noop = function(){};
+            pc.createDataChannel("");    //create a bogus data channel
+            pc.createOffer(function(sdp){
+              if(sdp.sdp.indexOf('typ relay') > -1){ // sometimes sdp contains the ice candidates...
+                promiseResolved = true;
+                resolve(true);
+              }
+              pc.setLocalDescription(sdp, noop, noop);
+            }, noop);    // create offer and set local description
+            pc.onicecandidate = function(ice){  //listen for candidate events
+              if(promiseResolved || !ice || !ice.candidate || !ice.candidate.candidate || !(ice.candidate.candidate.indexOf('typ relay')>-1))  return;
+              promiseResolved = true;
+              resolve(true);
+            };
+          });
+        }
+
+        const USERNAME="muazkh"
+        const PASSWORD="muazkh"
+        const PORT=8877
+        const IP="webrtcweb.com" // you will have to change this
+
+        checkTURNServer( {
+          url: `turn:${IP}:${PORT}?transport=tcp`,
+          username: USERNAME,
+          credential: PASSWORD,
+        }).then(function (res) {
+            console.log('test tcp ',res);
+        });
+
+       checkTURNServer( {
+          url: `turn:${IP}:${PORT}?transport=udp`,
+          username: USERNAME,
+          credential: PASSWORD,
+        }).then(function (res) {
+           console.log('test udp ',res);
+       });
+
     </script>
   </body>
 </html>
