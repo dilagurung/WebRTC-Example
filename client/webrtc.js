@@ -10,7 +10,7 @@ var peerConnectionConfig = {
 
 
     {
-      "urls": "turn:test@178.128.153.156:3478",
+      "urls": "turn:178.128.153.156:3478",
     "username": "test",
     "credential": "test"
 }
